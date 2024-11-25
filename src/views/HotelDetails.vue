@@ -7,6 +7,7 @@
   </template>
 
   <script>
+  import axios from 'axios';
   export default {
     data() {
       return { hotel: {} };
@@ -14,8 +15,9 @@
     mounted() {
       const id = this.$route.params.id;
       this.$axios.get(`/hotels/${id}`).then(response => {
-        this.hotel = response.data;
+
       });
+      console.log(this.hotel);
     },
   };
   </script>
