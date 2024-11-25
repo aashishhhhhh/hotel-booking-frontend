@@ -8,6 +8,7 @@ axios.defaults.withCredentials = true;
 import 'bootstrap/dist/css/bootstrap.min.css';
 // Import Bootstrap JS
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import alert from './plugins/alert';
 
 
 // Set Axios base URL
@@ -19,6 +20,9 @@ app.config.globalProperties.$axios = axios;
 
 // Use the router
 app.use(router);
+// User the alert
+app.use(alert);
+
 
 // Mount the app to the #app element
 app.mount('#app');

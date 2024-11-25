@@ -6,12 +6,11 @@
         </div>
         <div class="card-body">
           <div class="profile-header">
-            <h3 class="profile-name">{{ data.name || 'John Doe' }}</h3>
-            <p class="profile-email">{{ data.email || 'johndoe@example.com' }}</p>
+            <h3 class="profile-name">{{ name || 'John Doe' }}</h3>
+            <p class="profile-email">{{ email || 'johndoe@example.com' }}</p>
           </div>
 
           <div v-if="loading" class="loading">
-            <p>Loading profile...</p>
           </div>
 
           <div v-else>
@@ -36,8 +35,29 @@
         </div>
 
         <div class="card-footer text-center">
-          <button class="btn btn-primary" @click="editProfile">Edit Profile</button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      Open Modal
+    </button>
+          <!-- <button class="btn btn-primary" @click="editProfile">Edit Profile</button> -->
           <button class="btn btn-secondary" @click="logout">Logout</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            This is a Bootstrap modal in Vue.js.
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
         </div>
       </div>
     </div>
@@ -45,15 +65,15 @@
 
   <script>
 import axios from "axios";
-// import { TrackOpTypes } from "vue";
+import Swal from 'sweetalert2';
+import helpers from "@/helpers/helpers";
+// import alert from "@/plugins/alert";
 //   import helpers from "@/helpers/helpers";
   export default {
     name: "AppUserProfile",
     data() {
       return {
         data: {
-          name: "",
-          email: "",
           username: "",
           phone: "",
           address: "",
@@ -61,10 +81,12 @@ import axios from "axios";
           recentActivities: [],
         },
         loading: true,
+        name: "",
+        email: "",
       };
     },
     methods: {
-      async fetchData() {
+      async helpersfetchData() {
         try {
           const response = await axios.get("/api/example"); // Fetch user data
           this.data = response.data;
@@ -80,19 +102,29 @@ import axios from "axios";
       },
       logout() {
         try {
-            axios.get('clear-cache').then((response)=>{
-                console.log(response)
-               this.$router.push({ name: 'HomePage' });
+                Swal.fire({
+                    text: 'Are you sure you want to logout?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axios.get('clear-cache').then((response)=>{
+                        console.log(response)
+                        this.$router.push({ name: 'HomePage' });
+                    });
+                }
             });
+
         } catch (error) {
             console.log(error);
         }
-
-        alert("Logging out...");
       },
     },
-    mounted() {
-      this.fetchData();
+   async mounted() {
+        const userData = await helpers.getUserData();
+        this.email = userData.email;
+        this.name = userData.name;
     },
   };
   </script>
