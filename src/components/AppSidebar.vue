@@ -3,10 +3,14 @@
         <h4>Admin Panel</h4>
         <ul class="nav flex-column">
           <li class="nav-item">
-            <router-link class="nav-link text-white" to="/">Dashboard</router-link>
+            <router-link class="nav-link text-white" active-class="active" to="/">Dashboard</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link text-white" to="/AppUserProfile">Profile</router-link>
+            <router-link class="nav-link text-white" active-class="active" to="/AppUserProfile">Profile</router-link>
+        </li>
+
+        <li class="nav-item">
+            <router-link class="nav-link text-white" active-class="active" to="/AppDocument">Document</router-link>
         </li>
           <li class="nav-item">
             <a class="nav-link text-white" href="#">Settings</a>
@@ -21,3 +25,10 @@
 
 }
   </script>
+
+  <style scoped>
+  .nav-link.active {
+  background-color: #007bff; /* Highlight color for active link */
+  font-weight: bold; /* Optional: make it bold */
+}
+</style>

@@ -15,6 +15,12 @@ const routes = [
     meta: { requiresAuth: true }, // Protect this route
   },
   {
+    path: '/AppDocument',
+    name: 'AppDocument',
+    component: () => import('@/components/documents/AppDocument.vue'),
+    meta: { requiresAuth: true }, // Protect this route
+  },
+  {
     path: '/login',
     name: 'AppLogin',
     component: () => import('@/components/auth/AppLogin.vue'),

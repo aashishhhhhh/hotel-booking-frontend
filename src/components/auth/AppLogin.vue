@@ -62,7 +62,6 @@ import helpers from '@/helpers/helpers';
         {
             const token = await  helpers.getCsrfToken();
             this.csrfToken = token;
-            console.log(this.csrfToken)
             axios.post('/user/login', {
                 email: this.email,
                 password: this.password,
@@ -85,16 +84,6 @@ import helpers from '@/helpers/helpers';
             });
 
         }
-        // axios.post('/user/login', {
-        //     email: this.email,
-        //     password: this.password,
-        //     })
-        //     .then((response) => {
-        //     console.log(response);
-        //     })
-        //     .catch((error) => {
-        //     this.error = error.message;
-        //     });
 
         }
   }

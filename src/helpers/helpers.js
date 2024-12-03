@@ -24,10 +24,50 @@ async getUserData()
         console.error('Error fetching user data:', error);
         throw error; // Optionally rethrow the error for handling
       }
+},
+
+async checkPw(password)
+{
+    const token = await  this.getCsrfToken();
+
+    try{
+        const response = await axios.post('/user/checkpw',{
+            'password' : password
+        },{
+            headers:{
+                'X-CSRF-TOKEN': token,
+            }
+        });
+        return response.data; // return the response
+    }
+    catch(error)
+    {
+        console.error('Error fetching user data:', error);
+        throw error; // Optionally rethrow the error for handling
+    }
+},
+async changePw(password)
+{
+    const csrf = await this.getCsrfToken();
+
+    try{
+        const response = await axios.post('/user/changepw',{
+            'password': password
+        },{
+            headers:{
+                'X-CSRF-TOKEN':csrf
+            }
+        });
+        return response;
+    }
+    catch(error)
+    {
+        console.error('Error fetching user data:', error);
+        throw error; // Optionally rethrow the error for handling
+    }
 }
 
 
-  // check user is logged in or not
 
 
 };
